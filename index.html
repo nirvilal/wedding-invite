@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nirvi & Vidhant Wedding</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  background: linear-gradient(#FFE5B4, #FAD7A0);
+  color: #5A3E2B;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* ENVELOPE */
+.envelope-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.envelope {
+  width: 260px;
+  height: 170px;
+  background: linear-gradient(#f5d7a1, #e8b86d);
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.flap {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#e8b86d, #C9972B);
+  position: absolute;
+  top: 0;
+  transform-origin: top;
+  transition: transform 1s ease;
+  border-radius: 8px;
+}
+
+.open .flap {
+  transform: rotateX(180deg);
+}
+
+/* SECTIONS */
+.section {
+  padding: 80px 20px;
+  animation: fadeUp 1.2s ease;
+}
+
+@keyframes fadeUp {
+  from {opacity: 0; transform: translateY(40px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* TEXT */
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 48px;
+  margin: 10px 0;
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+}
+
+/* BUTTON */
+button {
+  margin-top: 20px;
+  padding: 12px 28px;
+  border: none;
+  background: #C9972B;
+  color: white;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* COUNTDOWN */
+#countdown {
+  font-size: 22px;
+  margin-top: 10px;
+}
+
+/* FLOATING PETALS */
+.petal {
+  position: fixed;
+  top: -10px;
+  font-size: 20px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+.hidden { display: none; }
+
+/* MUSIC BUTTON */
+.music-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #C9972B;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+</audio>
+<div class="music-btn" onclick="toggleMusic()">🎵</div>
+
+<!-- ENVELOPE -->
+<div class="envelope-container" id="envelopePage">
+  <h2>You’re Invited</h2>
+  <div class="envelope" onclick="openEnvelope()">
+    <div class="flap"></div>
+  </div>
+  <p>Tap to Open</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent" class="hidden">
+
+<div class="section">
+  <h2>With the blessings of</h2>
+  <p>Late Shantilal Devchand and Late Jaswantiben Shantilal</p>
+  <p>Together with</p>
+  <p><b>Ranjit Lal & Veena Lal</b></p>
+  <p>Invite you to celebrate</p>
+  <h1>Nirvi</h1>
+  <p>with</p>
+  <h1>Vidhant</h1>
+  <p>Son of Late Krishna Nambiar and Charlotte Nambiar</p>
+</div>
+
+<div class="section">
+  <h2>Grah Shantak & Haldi</h2>
+  <p>4th December 2026</p>
+</div>
+
+<div class="section">
+  <h2>Wedding Ceremony</h2>
+  <p>5th December 2026</p>
+</div>
+
+<div class="section">
+  <h2>Reception</h2>
+  <p>6th December 2026</p>
+</div>
+
+<div class="section">
+  <h2>Countdown to our big day</h2>
+  <div id="countdown"></div>
+</div>
+
+<div class="section">
+  <h2>RSVP</h2>
+  <button onclick="window.open('YOUR_GOOGLE_FORM_LINK')">RSVP Now</button>
+</div>
+
+</div>
+
+<script>
+function openEnvelope() {
+  document.querySelector('.envelope').classList.add('open');
+  setTimeout(() => {
+    document.getElementById('envelopePage').style.display = 'none';
+    document.getElementById('mainContent').classList.remove('hidden');
+  }, 900);
+}
+
+/* Countdown */
+var countDownDate = new Date("Dec 5, 2026 00:00:00").getTime();
+setInterval(function() {
+  var now = new Date().getTime();
+  var d = countDownDate - now;
+  var days = Math.floor(d / (1000*60*60*24));
+  var h = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+  var m = Math.floor((d%(1000*60*60))/(1000*60));
+  var s = Math.floor((d%(1000*60))/1000);
+  document.getElementById("countdown").innerHTML = days+"d "+h+"h "+m+"m "+s+"s";
+}, 1000);
+
+/* MUSIC */
+function toggleMusic() {
+  var music = document.getElementById("music");
+  music.paused ? music.play() : music.pause();
+}
+
+/* PETALS */
+for(let i=0;i<20;i++){
+  let petal=document.createElement("div");
+  petal.className="petal";
+  petal.innerHTML="🌸";
+  petal.style.left=Math.random()*100+"vw";
+  petal.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(petal);
+}
+</script>
+
+</body>
+</html>
